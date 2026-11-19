@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Матвей · занятия по языкам и блог о лингвистике</title>
+<meta name="description" content="Матвей, студент-лингвист. Онлайн-занятия по английскому и русскому языку и блог о том, как учить языки без зубрёжки." />
+<style>
+  /* ---------- Переменные темы: чёрное на кремовом ---------- */
+  :root{
+    --bg:#f4efe4;                /* кремовый фон */
+    --ink:#171512;               /* почти чёрный текст */
+    --ink-soft:#4b463d;          /* приглушённый текст */
+    --line:#d9d1bf;              /* линии/границы */
+    --card:#efe8d9;
+    --accent:#171512;            /* акцент = чёрный (минимализм) */
+    --max:1080px;
+    --radius:14px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Georgia","Times New Roman",serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+  h1,h2,h3,nav a,.btn,.tag,.eyebrow{
+    font-family:"Helvetica Neue",Arial,"Segoe UI",sans-serif;
+  }
+
+  a{color:inherit}
+
+  /* ---------- Шапка / навигация ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(244,239,228,.85);
+    backdrop-filter:saturate(120%) blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:700;letter-spacing:.02em;font-size:18px}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{
+    text-decoration:none;font-size:14px;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--ink-soft);
+    padding:6px 0;border-bottom:1.5px solid transparent;transition:.2s;
+  }
+  .nav-links a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+  .nav-cta{
+    text-decoration:none;font-size:14px;letter-spacing:.03em;
+    padding:9px 18px;border:1.5px solid var(--ink);border-radius:999px;
+    text-transform:uppercase;transition:.2s;
+  }
+  .nav-cta:hover{background:var(--ink);color:var(--bg)}
+
+  .burger{display:none;background:none;border:0;cursor:pointer;padding:8px}
+  .burger span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:.3s}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:96px 0 72px;border-bottom:1px solid var(--line)}
+  .eyebrow{
+    font-size:13px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(40px,8vw,82px);line-height:1.02;font-weight:800;
+    letter-spacing:-.02em;margin-bottom:26px;
+  }
+  .hero p.lead{
+    font-size:clamp(18px,2.3vw,22px);max-width:620px;color:var(--ink-soft);margin-bottom:38px;
+  }
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    text-decoration:none;cursor:pointer;
+    font-size:15px;letter-spacing:.02em;
+    padding:14px 26px;border-radius:999px;border:1.5px solid var(--ink);
+    background:var(--ink);color:var(--bg);transition:.2s;
+  }
+  .btn:hover{transform:translateY(-1px);opacity:.92}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--bg)}
+
+  .hero-meta{
+    display:flex;gap:30px;flex-wrap:wrap;margin-top:48px;
+    padding-top:28px;border-top:1px solid var(--line);
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+  .hero-meta div b{display:block;font-size:26px;font-weight:700}
+  .hero-meta div span{font-size:13px;letter-spacing:.04em;color:var(--ink-soft);text-transform:uppercase}
+
+  /* ---------- Секции ---------- */
+  section{padding:84px 0}
+  .section-head{margin-bottom:46px;max-width:620px}
+  .section-head .eyebrow{margin-bottom:14px}
+  .section-head h2{font-size:clamp(28px,4.5vw,44px);font-weight:800;letter-spacing:-.01em}
+
+  /* Обо мне */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  .about-grid p{margin-bottom:18px;font-size:18px;color:var(--ink-soft)}
+  .about-grid p:last-child{margin-bottom:0}
+  .about-list{list-style:none;display:grid;gap:16px}
+  .about-list li{
+    display:flex;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--line);
+  }
+  .about-list li:last-child{border-bottom:0}
+  .about-list .n{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:14px;min-width:34px;color:var(--ink)}
+  .about-list .t b{display:block;font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px}
+  .about-list .t span{font-size:15px;color:var(--ink-soft)}
+
+  /* Работы */
+  .works{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .work{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px;display:flex;flex-direction:column;gap:14px;min-height:230px;transition:.2s;
+  }
+  .work:hover{transform:translateY(-3px)}
+  .work .tag{
+    align-self:flex-start;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    padding:5px 12px;border:1px solid var(--ink);border-radius:999px;color:var(--ink);
+  }
+  .work h3{font-size:20px;font-weight:700;line-height:1.25}
+  .work p{font-size:15px;color:var(--ink-soft)}
+  .work .quote{font-style:italic;font-size:16px;margin-top:auto;color:var(--ink)}
+  .work .who{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft);margin-top:6px}
+
+  /* Контакты / запись */
+  .contact{border-top:1px solid var(--line);background:var(--card)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .contact-grid .lead{font-size:18px;color:var(--ink-soft);margin-bottom:28px}
+  .socials{display:grid;gap:14px;font-family:"Helvetica Neue",Arial,sans-serif}
+  .socials a{
+    display:flex;justify-content:space-between;align-items:center;
+    text-decoration:none;padding:16px 0;border-bottom:1px solid var(--line);transition:.2s;
+  }
+  .socials a:hover{padding-left:8px}
+  .socials a span.l{font-size:16px}
+  .socials a span.v{font-size:14px;color:var(--ink-soft)}
+
+  form{display:grid;gap:16px}
+  label{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px;display:block}
+  input,select,textarea{
+    width:100%;font-family:inherit;font-size:16px;color:var(--ink);
+    background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:13px 14px;transition:.2s;
+  }
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
+  textarea{resize:vertical;min-height:90px}
+  .form-note{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink-soft)}
+  .form-msg{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;padding:12px 14px;border-radius:10px;border:1px solid var(--ink);display:none}
+
+  /* ---------- Подвал ---------- */
+  footer{border-top:1px solid var(--line);padding:40px 0;font-family:"Helvetica Neue",Arial,sans-serif}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:14px;color:var(--ink-soft)}
+  .foot a{text-decoration:none}
+
+  /* ---------- Адаптив ---------- */
+  @media(max-width:860px){
+    .about-grid,.contact-grid,.works{grid-template-columns:1fr}
+    .works{gap:16px}
+    .nav-links{
+      position:fixed;inset:64px 0 auto 0;background:var(--bg);
+      flex-direction:column;gap:0;padding:8px 24px 24px;
+      border-bottom:1px solid var(--line);
+      transform:translateY(-120%);transition:.35s;align-items:stretch;
+    }
+    .nav-links.open{transform:translateY(0)}
+    .nav-links a{padding:16px 0;border-bottom:1px solid var(--line);text-align:left}
+    .nav-cta{text-align:center;margin-top:12px}
+    .burger{display:block}
+    .hero{padding:64px 0 52px}
+    section{padding:60px 0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= ШАПКА ================= -->
+<header>
+  <div class="wrap nav">
+    <div class="brand">МАТВЕЙ</div>
+    <nav class="nav-links" id="menu">
+      <a href="#about">Обо мне</a>
+      <a href="#works">Работы</a>
+      <a href="#contact">Контакты</a>
+      <a href="#contact" class="nav-cta">Записаться</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ================= ГЛАВНЫЙ ЭКРАН ================= -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow">Онлайн-занятия · блог о языках</p>
+    <h1>Учу языки так,<br>как хотел бы,<br>чтобы учили меня.</h1>
+    <p class="lead">
+      Привет, я Матвей — студент-лингвист первого курса. Занимаюсь английским и
+      русским языком онлайн и веду блог о том, как учить язык без скучной зубрёжки.
+      Без давления, в твоём темпе и по-человечески.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn">Записаться на занятие</a>
+      <a href="https://t.me/v1norze" target="_blank" rel="noopener" class="btn ghost">Подписаться в Telegram</a>
+    </div>
+    <div class="hero-meta">
+      <div><b>750 ₽</b><span>за урок 40–60 мин</span></div>
+      <div><b>30 мин</b><span>короткий формат</span></div>
+      <div><b>Онлайн</b><span>из любого города</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ОБО МНЕ ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Обо мне</p>
+      <h2>Студент, который сам недавно сидел на твоём месте</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>
+          Меня зовут Матвей, я учусь на первом курсе на лингвиста. Языки — это то,
+          чем я живу: разбираюсь, как они устроены, почему одно правило работает,
+          а другое нет, и как объяснить это простыми словами.
+        </p>
+        <p>
+          Я помню, как сам путался в грамматике и боялся говорить, поэтому на занятиях
+          не ругаю за ошибки — мы вместе ищем, где именно «спотыкается» понимание, и
+          убираем это. Объясняю на нормальном языке, а не формулами из учебника.
+        </p>
+        <p>
+          <!-- ЗАГЛУШКА: при желании уточни направления, когда определишься -->
+          Беру учеников на английский (школьная программа и разговорный) и помогаю
+          с русским языком — грамотность, сочинения, подготовка к контрольным.
+        </p>
+      </div>
+      <ul class="about-list">
+        <li>
+          <span class="n">01</span>
+          <span class="t"><b>Формат</b><span>Онлайн, по видеосвязи. Урок 40–60 минут или короткий формат 30 минут.</span></span>
+        </li>
+        <li>
+          <span class="n">02</span>
+          <span class="t"><b>Стоимость</b><span>750 ₽ за полное занятие. Первое знакомство — коротко и ни к чему не обязывает.</span></span>
+        </li>
+        <li>
+          <span class="n">03</span>
+          <span class="t"><b>Для кого</b><span>Школьники, родители, которые ищут репетитора ребёнку, и взрослые, которые начинают с нуля.</span></span>
+        </li>
+        <li>
+          <span class="n">04</span>
+          <span class="t"><b>Подход</b><span>Без зубрёжки и стыда за ошибки. Разбираем то, что реально нужно тебе.</span></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= РАБОТЫ ================= -->
+<!-- ЗАГЛУШКА: это выдуманные примеры и отзывы. Замени на реальные, когда появятся. -->
+<section id="works">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Работы</p>
+      <h2>Над чем я работаю и что об этом говорят</h2>
+    </div>
+    <div class="works">
+      <article class="work">
+        <span class="tag">Блог</span>
+        <h3>«Почему мы забываем слова и как это чинить»</h3>
+        <p>Разбор про интервальное повторение простыми словами — как учить лексику, чтобы она оставалась.</p>
+      </article>
+      <article class="work">
+        <span class="tag">Блог</span>
+        <h3>«Времена в английском на пальцах»</h3>
+        <p>Серия коротких постов, где вся система времён укладывается в одну понятную картинку.</p>
+      </article>
+      <article class="work">
+        <span class="tag">Занятия</span>
+        <h3>Разговорные клубы для начинающих</h3>
+        <p>Мини-встречи, где можно говорить с ошибками и не бояться — главное начать.</p>
+      </article>
+      <article class="work">
+        <span class="tag">Отзыв</span>
+        <p class="quote">«Сын впервые перестал бояться английского и сам сел делать домашку. Спасибо!»</p>
+        <p class="who">— Ольга, мама ученика 6 класса</p>
+      </article>
+      <article class="work">
+        <span class="tag">Отзыв</span>
+        <p class="quote">«Объясняет спокойно и по делу. За месяц подтянула грамотность перед сочинением.»</p>
+        <p class="who">— Дарья, 10 класс</p>
+      </article>
+      <article class="work">
+        <span class="tag">Отзыв</span>
+        <p class="quote">«Удобно, что онлайн и недорого. Занимаемся с нуля, прогресс уже заметен.»</p>
+        <p class="who">— Артём, студент</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= КОНТАКТЫ / ЗАПИСЬ ================= -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Контакты</p>
+      <h2>Запишись на занятие или просто напиши</h2>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <p class="lead">
+          Заполни форму — она соберёт сообщение и откроет чат в Telegram, останется
+          только отправить. Или напиши мне напрямую любым удобным способом.
+        </p>
+        <div class="socials">
+          <a href="https://t.me/v1norze" target="_blank" rel="noopener">
+            <span class="l">Telegram</span><span class="v">@v1norze →</span>
+          </a>
+          <!-- ЗАГЛУШКА: добавь ссылки, когда заведёшь соцсети -->
+          <a href="#contact" onclick="return soon(event)">
+            <span class="l">VK</span><span class="v">скоро →</span>
+          </a>
+          <a href="#contact" onclick="return soon(event)">
+            <span class="l">YouTube / Rutube</span><span class="v">скоро →</span>
+          </a>
+        </div>
+      </div>
+
+      <form id="signupForm">
+        <div>
+          <label for="name">Как тебя зовут</label>
+          <input id="name" name="name" type="text" placeholder="Имя" required />
+        </div>
+        <div>
+          <label for="who">Для кого занятие</label>
+          <select id="who" name="who">
+            <option>Для себя</option>
+            <option>Для ребёнка</option>
+          </select>
+        </div>
+        <div>
+          <label for="format">Формат</label>
+          <select id="format" name="format">
+            <option>Полное занятие · 40–60 мин · 750 ₽</option>
+            <option>Короткое · 30 мин</option>
+            <option>Пока не решил(а), нужна помощь с выбором</option>
+          </select>
+        </div>
+        <div>
+          <label for="goal">Что хочешь подтянуть</label>
+          <textarea id="goal" name="goal" placeholder="Например: английский с нуля / грамотность перед сочинением / разговорная практика"></textarea>
+        </div>
+        <button type="submit" class="btn" style="justify-content:center">Отправить заявку в Telegram</button>
+        <p class="form-note">Нажимая кнопку, ты перейдёшь в мой Telegram с уже готовым сообщением.</p>
+        <div class="form-msg" id="formMsg"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ПОДВАЛ ================= -->
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="year"></span> Матвей · Занятия по языкам</span>
+    <span><a href="https://t.me/v1norze" target="_blank" rel="noopener">Telegram @v1norze</a></span>
+  </div>
+</footer>
+
+<script>
+  // Год в подвале
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Мобильное меню
+  var burger = document.getElementById('burger');
+  var menu = document.getElementById('menu');
+  burger.addEventListener('click', function(){ menu.classList.toggle('open'); });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ menu.classList.remove('open'); });
+  });
+
+  // Заглушка для ещё не заведённых соцсетей
+  function soon(e){
+    e.preventDefault();
+    alert('Эта соцсеть скоро появится — пока пиши в Telegram @v1norze');
+    return false;
+  }
+
+  // Форма записи -> собирает сообщение и открывает Telegram
+  var TG = 'v1norze'; // ник Telegram для записи
+  document.getElementById('signupForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = e.target;
+    var text =
+      'Здравствуйте! Хочу записаться на занятие.%0A' +
+      'Имя: ' + encodeURIComponent(f.name.value || '—') + '%0A' +
+      'Для кого: ' + encodeURIComponent(f.who.value) + '%0A' +
+      'Формат: ' + encodeURIComponent(f.format.value) + '%0A' +
+      'Запрос: ' + encodeURIComponent(f.goal.value || '—');
+
+    // Копируем текст в буфер (на случай, если Telegram не подставит сообщение)
+    var plain = decodeURIComponent(text.replace(/%0A/g,'\n'));
+    if (navigator.clipboard) { navigator.clipboard.writeText(plain).catch(function(){}); }
+
+    var msg = document.getElementById('formMsg');
+    msg.style.display = 'block';
+    msg.textContent = 'Открываю Telegram… Если сообщение не подставилось — оно уже скопировано, просто вставь его в чат.';
+
+    // Переходим в чат (параметр text подставляется не везде, поэтому дублируем копией)
+    window.open('https://t.me/' + TG + '?text=' + text, '_blank');
+  });
+</script>
+</body>
+</html>
